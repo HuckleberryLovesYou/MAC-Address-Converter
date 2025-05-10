@@ -194,10 +194,13 @@ def main() -> None:
         logger.info("No arguments provided. Using interactive mode.")
 
     # Define logging level depending on verbosity
-    if args.verbose_boolean:
-        logger.setLevel(logging.DEBUG)
-    elif args.quiet_boolean:
-        logger.setLevel(logging.WARNING)
+    if cli_args_given:
+        if args.verbose_boolean:
+            logger.setLevel(logging.DEBUG)
+        elif args.quiet_boolean:
+            logger.setLevel(logging.WARNING)
+        else:
+            logger.setLevel(logging.INFO)
     else:
         logger.setLevel(logging.INFO)
 
