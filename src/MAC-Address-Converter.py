@@ -74,11 +74,11 @@ def get_raw_mac_address(mac_address: str) -> str | None:
         if letter in hexdigits:
             raw_mac_address += letter
 
-    logger.debug(f"Length of the raw MAC-Address is {len(raw_mac_address)} char(s)")
+    logger.debug(f"Length of the raw MAC-Address is {len(raw_mac_address)}.")
     if len(raw_mac_address) == 12:
         return raw_mac_address
     else:
-        logger.error(f"MAC-Address {raw_mac_address} is invalid.")
+        logger.error(f"MAC-Address '{raw_mac_address}' is invalid.")
         return None
 
 
@@ -142,7 +142,7 @@ def handle_file(separation_character: str, api: bool, lower: bool, api_token, ou
         rows = list(reader)
         total_rows = (len(rows) - 1)
 
-        # Define progressbar on file handle
+        # Define progressbar
         widgets = [progressbar.PercentageLabelBar(), " ", progressbar.FormatLabel('[%(value)d/%(max_value)d]'), " ", progressbar.ETA()]
         bar = progressbar.ProgressBar(widgets=widgets, max_value=total_rows, redirect_stdout=True).start()
 
@@ -214,6 +214,7 @@ def main() -> None:
             output = True
         if args.file:
             logger.debug("The input of MAC-Addresses will be a file.")
+            print("The supported file format is only csv files exported from the 'Advanced IP Scanner' (https://www.advanced-ip-scanner.com/de/). It's language independent.")
             file = True
             handle_file(separation_character, api, lower, None, output)
         else:
@@ -226,7 +227,7 @@ def main() -> None:
     else:
         mac_address = input("Enter a MAC-Address: ")
         separation_character = input("Enter the separation character: ")
-        if input("Get Vendor of MAC-Address by API? [Y/n]:") == "Y":
+        if input("Get Vendor of MAC-Address by API? [Y/n]:").lower() == "y":
             api = True
             logger.debug("MAC-Address API Lookup activated.")
 
